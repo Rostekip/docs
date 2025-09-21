@@ -7,6 +7,9 @@
     "light": "#07C983",
     "dark": "#15803D"
   },
+  "appearance": {
+    "default": "dark"
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
@@ -53,12 +56,7 @@
           },
           {
             "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+            "pages": ["api-reference/endpoint/projects"]
           }
         ]
       }
@@ -66,9 +64,9 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Twitter",
+          "anchor": "X",
           "href": "https://x.com/PAYINGAME01",
-          "icon": "twitter"
+          "icon": "x-twitter"
         },
         {
           "anchor": "Videos",
@@ -91,8 +89,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "To Site",
+      "href": "https://payingame.io"
     }
   },
   "contextual": {
