@@ -55,8 +55,15 @@
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Endpoint examples",
-            "pages": ["api-reference/endpoint/projects"]
+            "group": "Endpoints available",
+            "pages": [
+              "api-reference/endpoint/projects",
+              "api-reference/endpoint/products",
+              "api-reference/endpoint/prices",
+              "api-reference/endpoint/languages",
+              "api-reference/endpoint/receipts",
+              "api-reference/endpoint/webhook"
+            ]
           }
         ]
       }

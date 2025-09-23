@@ -19,7 +19,8 @@
             "name": "YourAPIKEY",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string" },
+            "description": "Will be your Test or Production API Key"
           }
         ],
         "responses": {
@@ -36,6 +37,7 @@
                     },
                     "Projects": {
                       "type": "array",
+                      "description": "Will not be available in case of an error",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -52,49 +54,7 @@
                       "example": "Empty if no error, otherwise Error string"
                     }
                   },
-                  "required": ["isError", "Games", "Error"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (e.g. project not found, invalid parameters)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "properties": {
-                    "isError": { "type": "string" },
-                    "Error": { "type": "string" }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized (invalid API key or throttled)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "isError": { "type": "string" },
-                    "Error": { "type": "string" }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "isError": { "type": "string" },
-                    "Error": { "type": "string" }
-                  }
+                  "required": ["isError", "Projects", "Error"]
                 }
               }
             }
@@ -102,18 +62,18 @@
         }
       }
     },
-    "/Products/{Guid}/{GameGuid}": {
+    "/Products/{YourAPIKEY}/{ProjectGuid}": {
       "get": {
         "summary": "Get active products for a game",
         "parameters": [
           {
-            "name": "Guid",
+            "name": "YourAPIKEY",
             "in": "path",
             "required": true,
             "schema": { "type": "string" }
           },
           {
-            "name": "GameGuid",
+            "name": "ProjectGuid",
             "in": "path",
             "required": true,
             "schema": { "type": "string" }
@@ -127,9 +87,96 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "Error": { "type": "string" },
-                    "isError": { "type": "string" },
-                    "Data": { "type": "array", "items": { "type": "object" } }
+                    "isError": { "type": "string", "example": "0" },
+                    "Error": { "type": "string", "example": "" },
+                    "Data": {
+                      "type": "object",
+                      "properties": {
+                        "Types": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": { "type": "string", "example": "2" },
+                              "name": { "type": "string", "example": "Item" }
+                            }
+                          }
+                        },
+                        "Products": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "IsUnlimited": {
+                                "type": "boolean",
+                                "example": true
+                              },
+                              "Amount": { "type": "string", "example": "" },
+                              "Guid": {
+                                "type": "string",
+                                "format": "uuid",
+                                "example": "XXXXX-XXXX-XXXX-XXXX-XXXXX"
+                              },
+                              "Languages": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "Value": { "type": "string" },
+                                        "Type": {
+                                          "type": "string",
+                                          "enum": ["Title", "Description"]
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "ImageUrl": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "https://url/img/image.png"
+                              },
+                              "Type": { "type": "string", "example": "2" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "isError": "0",
+                    "Error": "",
+                    "Data": {
+                      "Types": [
+                        { "value": "2", "name": "Item" },
+                        { "value": "4", "name": "Subscription" }
+                      ],
+                      "Products": [
+                        {
+                          "IsUnlimited": true,
+                          "Amount": "",
+                          "Guid": "XXXXX-XXXX-XXXX-XXXX-XXXXX",
+                          "Languages": [
+                            {
+                              "EN": [
+                                { "Value": "My Title", "Type": "Title" },
+                                {
+                                  "Value": "My Description",
+                                  "Type": "Description"
+                                }
+                              ]
+                            }
+                          ],
+                          "ImageUrl": "https://url/image.png",
+                          "Type": "2"
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -138,18 +185,18 @@
         }
       }
     },
-    "/Prices/{Guid}/{GameGuid}/{Chains}/{IsAll}": {
+    "/Prices/{YourAPIKEY}/{ProjectGuid}/{Chains}/{IsAll}": {
       "get": {
         "summary": "Get active prices",
         "parameters": [
           {
-            "name": "Guid",
+            "name": "YourAPIKEY",
             "in": "path",
             "required": true,
             "schema": { "type": "string" }
           },
           {
-            "name": "GameGuid",
+            "name": "ProjectGuid",
             "in": "path",
             "required": true,
             "schema": { "type": "string" }
@@ -183,8 +230,92 @@
                   "properties": {
                     "Error": { "type": "string" },
                     "isError": { "type": "string" },
-                    "Prices": { "type": "array", "items": { "type": "object" } }
+                    "Prices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Currency": { "type": "string" },
+                          "FromDate": { "type": "string" },
+                          "FromAmount": { "type": "string" },
+                          "DiscountAmount": { "type": "string" },
+                          "DiscountIsPercentage": { "type": "boolean" },
+                          "TaxIncludedInPrice": { "type": "string" },
+                          "ToAmount": { "type": "string" },
+                          "Chain": { "type": "string" },
+                          "Amount": { "type": "string" },
+                          "ToDate": { "type": "string" },
+                          "PriceGuid": { "type": "string" },
+                          "Products": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "IsUnlimited": { "type": "boolean" },
+                                "Amount": { "type": "string" },
+                                "Guid": { "type": "string" },
+                                "ImageUrl": { "type": "string" },
+                                "Type": { "type": "string" },
+                                "Languages": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Value": { "type": "string" },
+                                          "Type": { "type": "string" }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
+                },
+                "example": {
+                  "Prices": [
+                    {
+                      "Currency": "USD",
+                      "FromDate": "",
+                      "FromAmount": "",
+                      "DiscountAmount": "4.990",
+                      "DiscountIsPercentage": false,
+                      "TaxIncludedInPrice": "true",
+                      "ToAmount": "",
+                      "Chain": "FIAT",
+                      "Amount": "4.990",
+                      "Products": [
+                        {
+                          "IsUnlimited": true,
+                          "Amount": "",
+                          "Guid": "XXXXX-XXXX-XXXX-XXXX-XXXXX",
+                          "Languages": [
+                            {
+                              "EN": [
+                                { "Value": "My Title", "Type": "Title" },
+                                {
+                                  "Value": "My Description",
+                                  "Type": "Description"
+                                }
+                              ]
+                            }
+                          ],
+                          "ImageUrl": "https://url/img/img.png",
+                          "Type": "2"
+                        }
+                      ],
+                      "ToDate": "",
+                      "PriceGuid": "687C3765-A270-77C2-F4F5-D469D2D07236"
+                    }
+                  ]
                 }
               }
             }
@@ -192,12 +323,12 @@
         }
       }
     },
-    "/Languages/{Guid}": {
+    "/Languages/{YourAPIKEY}": {
       "get": {
         "summary": "Get active languages",
         "parameters": [
           {
-            "name": "Guid",
+            "name": "YourAPIKEY",
             "in": "path",
             "required": true,
             "schema": { "type": "string" }
@@ -215,7 +346,7 @@
                     "isError": { "type": "string" },
                     "Languages": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -225,35 +356,12 @@
         }
       }
     },
-    "/Product": {
-      "post": {
-        "summary": "Get product or price for sale",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "type": "object" }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Product or price response",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/Receipts/{Guid}/{CustomerID}": {
+    "/Receipts/{YourAPIKEY}/{CustomerID}": {
       "get": {
         "summary": "Get receipts for a customer",
         "parameters": [
           {
-            "name": "Guid",
+            "name": "YourAPIKEY",
             "in": "path",
             "required": true,
             "schema": { "type": "string" }
@@ -273,12 +381,36 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "Error": { "type": "string" },
-                    "isError": { "type": "string" },
+                    "isError": { "type": "string", "example": "0" },
+                    "Error": { "type": "string", "example": "" },
                     "Receipts": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Date": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-09-23 17:36:11"
+                          },
+                          "Receipt": {
+                            "type": "string",
+                            "format": "uri",
+                            "example": "https://url/receipt"
+                          }
+                        }
+                      }
                     }
+                  },
+                  "example": {
+                    "isError": "0",
+                    "Error": "",
+                    "Receipts": [
+                      {
+                        "Date": "2025-09-23 17:36:11",
+                        "Receipt": "https://url/receipt"
+                      }
+                    ]
                   }
                 }
               }
@@ -286,33 +418,65 @@
           }
         }
       }
-    },
-    "/PaymentExpired/{Guid}": {
-      "get": {
-        "summary": "Check if a payment is expired",
-        "parameters": [
-          {
-            "name": "Guid",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Expiration status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "Error": { "type": "string" },
-                    "isError": { "type": "string" },
-                    "IsExpired": { "type": "boolean" }
-                  }
-                }
+    }
+  },
+  "webhooks": {
+    "/payment/webhookdefinedbyuser": {
+      "post": {
+        "description": "Triggered when a payment is completed",
+        "requestBody": {
+          "description": "Payment completed event payload",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PaymentCompleted" },
+              "example": {
+                "GameGuid": "XXXXX-XXXXX-XXXXX",
+                "Quantity": 1,
+                "Products": ["XXXXX-XXXXX-XXXXX"],
+                "PaymentGuid": "XXXXX-XXXXX-XXXXXX",
+                "UserID": "The UserID"
               }
             }
+          }
+        },
+        "responses": {
+          "200": { "description": "Return 200 to acknowledge receipt" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentCompleted": {
+        "type": "object",
+        "required": [
+          "GameGuid",
+          "Quantity",
+          "Products",
+          "PaymentGuid",
+          "UserID"
+        ],
+        "properties": {
+          "GameGuid": {
+            "type": "string",
+            "description": "The GUID of the game"
+          },
+          "Quantity": {
+            "type": "integer",
+            "description": "Number of products purchased"
+          },
+          "Products": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of product GUIDs"
+          },
+          "PaymentGuid": {
+            "type": "string",
+            "description": "Unique payment identifier"
+          },
+          "UserID": {
+            "type": "string",
+            "description": "The user’s ID in your system"
           }
         }
       }
