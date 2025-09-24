@@ -430,7 +430,7 @@
             "application/json": {
               "schema": { "$ref": "#/components/schemas/PaymentCompleted" },
               "example": {
-                "GameGuid": "XXXXX-XXXXX-XXXXX",
+                "ProjectGuid": "XXXXX-XXXXX-XXXXX",
                 "Quantity": 1,
                 "Products": ["XXXXX-XXXXX-XXXXX"],
                 "PaymentGuid": "XXXXX-XXXXX-XXXXXX",
@@ -450,14 +450,14 @@
       "PaymentCompleted": {
         "type": "object",
         "required": [
-          "GameGuid",
+          "ProjectGuid",
           "Quantity",
           "Products",
           "PaymentGuid",
           "UserID"
         ],
         "properties": {
-          "GameGuid": {
+          "ProjectGuid": {
             "type": "string",
             "description": "The GUID of the game"
           },
