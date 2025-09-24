@@ -423,7 +423,7 @@
   "webhooks": {
     "/payment/webhookdefinedbyuser": {
       "post": {
-        "description": "Triggered when a payment is completed",
+        "description": "Triggered when a payment is completed (on web2 and/or web3). The receival url can be filled in for Test and production. See documentation on how to do so.",
         "requestBody": {
           "description": "Payment completed event payload",
           "content": {

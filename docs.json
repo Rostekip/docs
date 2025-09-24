@@ -25,6 +25,14 @@
             ]
           },
           {
+            "group": "Projects",
+            "pages": [
+              "payingame/projects/createproject",
+              "payingame/projects/editproject"
+            ]
+          },
+
+          {
             "group": "Customization",
             "pages": ["essentials/settings", "essentials/navigation"]
           },
