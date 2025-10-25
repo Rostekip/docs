@@ -1,0 +1,76 @@
+---
+title: "Create a product"
+description: "Products are items that are attached to your project. It can be ingame items, NFT's or subscriptions."
+---
+
+In order to create a product, you will need to select a project on top if you see this screen
+
+<img
+  src="/images/product1.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+Select one of your projects on top
+
+<img
+  src="/images/product2.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+Once you selected a game, you will be able to create or edit a product
+
+<img
+  src="/images/product3.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+Click on the "Add" button. A popup will appear
+
+<img
+  src="/images/product4.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+- Name: Will be the name of your product
+- Type Product: This will define your product. It can be an item (this is a db item), an NFT or a subscription. Based on the type more info is needed.
+- Max Amount User can buy per sale: This will define how many products a user can buy per sale. If its on 1, the user will not be able to select the number they desire.
+- Upload Image: The image for the product
+- Unlimited Amount: If checked, then it will be unlimited. Otherwise a value needs to be given. (example, you only want to have an x amount of products available.)
+- Enabled?: Do you want to enable the product or not?
+- Webhook Enabled for this product?: It could be that for certain items, you don't want to have a webhook enabled. Example are NFT Items, where payingame will tell the game through an api what the user has. It is not needed then most likely that a webhook is enabled when an NFT item is sold.
+
+Extra info for NFT Items:
+
+<img
+  src="/images/product5.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+- Platform hosted?: If checked, Payingame will make sure that your metadata is kept in sync. We provide api's so that you can update the metadata. Example is dynamic attributes which can be given in the NFT attributes (like level and ranks). Once you update it through the api, the metadata will automatically be updated. If you do want control over the metadata, uncheck this box and fill in the url to where it needs to point.
+- NFT Attributes: Here you can define what the attributes will be of your NFT. They can be static or dynamic variables. Static ones will never be able to be changed, dynamic can.
+
+<img
+  src="/images/product6.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+- Supported Chains: This will define where the NFT can be deployed. This can always be updated later. So if you want to only deploy it to ETH but later to AVAX that's possible. The Tokens to pay for this product will automatically be activated. You have control though in the price section which tokens are used.
+
+<img
+  src="/images/product7.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
