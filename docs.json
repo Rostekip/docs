@@ -27,7 +27,7 @@
             "group": "Settings",
             "pages": [
               "payingame/settings/generalsettings",
-              "payingame/projects/editproject",
+              "payingame/settings/securitysettings",
               "payingame/settings/apikeys"
             ]
           },
