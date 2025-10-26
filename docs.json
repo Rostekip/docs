@@ -20,8 +20,15 @@
             "group": "Getting started",
             "pages": [
               "payingame/gettingstarted/subscribe",
-              "payingame/gettingstarted/testvsproduction",
-              "payingame/gettingstarted/apikeys"
+              "payingame/gettingstarted/testvsproduction"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "payingame/settings/generalsettings",
+              "payingame/projects/editproject",
+              "payingame/settings/apikeys"
             ]
           },
           {
