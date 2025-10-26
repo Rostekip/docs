@@ -48,7 +48,10 @@
           },
           {
             "group": "Prices",
-            "pages": ["payingame/prices/createprice"]
+            "pages": [
+              "payingame/prices/createprice",
+              "payingame/prices/fiatpayments"
+            ]
           }
         ]
       },
@@ -100,7 +103,7 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@payingame.io"
+        "href": "mailto:info@payingame.io"
       }
     ],
     "primary": {
