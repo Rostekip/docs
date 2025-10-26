@@ -1,0 +1,35 @@
+---
+title: "Payment Page"
+description: "Once you know the product id's you can point your game towards the payment page."
+---
+
+Below is the URL that needs to be used
+
+> https://payingame.io/payment/[Guid]/[UserID]/[Language]/[UniquePaymentGuid]
+
+- [Guid]: This is the productGuid you want to sell.
+- [UserID]: The userid of your game or Saas solution. This can be a steam id or any other unique identifier you are using in your product.
+- [Language]: The language in which the payment page needs to be shown.
+- [UniquePaymentGuid]: This uniquely identifies the payment. Its needed to be sure that a user can only buy an item once.
+
+Based on the payments you added, the payment page will give the user a choice to pay with Fiat and/or crypto.
+
+<img
+  src="/images/product10.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+Other features include:
+
+- Show the VAT on top of the price (based on the way you have set the price)
+- Show the amount of items a customer can buy at the same time (based on the maximum amount a user can buy. See 'Create a product')
+- Show the payment terms (in case you uploaded one)
+- Email needs to be filled in at all times. This to sent the receipt once a sale is successful
+
+If a user selected to pay with crypto, they will be able to attach any wallet they prefer to pay the item with. The system will detect all installed wallets and show them.
+
+<img src="/images/connectwallet.png" alt="addproject" height="500" />
+
+Once the payment is successful, the webhook will return a payment successful to your backend so that you know that all is fine.
