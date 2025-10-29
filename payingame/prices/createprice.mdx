@@ -15,7 +15,7 @@ In order to create a price, select the "Prices" on top. You will need to select 
 You will see 2 different payments:
 
 - Fiat payments: This enables you to sell items through credit card or any other form of fiat payment. For more information click <a href="/payingame/prices/fiatpayments">Here</a>
-- Crypto payments: This enables you to sell items with crypto. For more information click <a href="/payingame/products/createproduct">Here</a>
+- Crypto payments: This enables you to sell items with crypto. For more information click <a href="/payingame/prices/cryptopayments">Here</a>
 
 If both buttons are on "Enable" it means you still need to define the payment methods. You will need to click on one of these two buttons to onboard the type of payment.
 If one of the two is on 'Enabled', you can start giving in prices.
@@ -28,3 +28,24 @@ Once you click on 'Add', the following popup will appear
   height="100"
   className="rounded-lg"
 />
+
+- Selection of product(s): A price can be given to one or multiple products. You can group these products into one single price.
+- Price: The price you want to give to the product.
+- Discount (Fixed or %): The discount you want to give. It can be a fixed value or a %. It will be deducted from the Price.
+- Currency: Will be in USD or EUR. The system will pick which currency will be shown to the customer based on where they are buying (based on IP)
+- Token: Default on FIAT. This means that it will be payments with Credit Card. If crypto is required, you can choose one of the tokens. The system will calculate live, based on the USD or EUR what the token price is.
+- Tax included in Price?: This checkbox will determine if the customer will see the tax or that its calculated inside the price you filled in.
+- From Date and To Date: Determines the price (and discount) that will be used. If these dates are empty, then the price will be always visible.
+- Upload background image: This gives you the opportunity to create your custom background image when the user goes to the payment page. If none is given, the default Payingame background will be used.
+
+Multiple prices can be given to the product(s). So you will be able to fill in prices for EUR, USD and any token that you want to accept payments on.
+You can as well give temporary discounts based on this.
+
+<img
+  src="/images/pricediscount.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+Above gives an example on how to create different prices for your product. The way the prices are shown is from top down. So if a price (here in EUR) has a discount between a certain time period, its best to move them on top so that the system will take it into consideration.

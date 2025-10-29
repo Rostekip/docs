@@ -50,8 +50,15 @@
             "group": "Prices",
             "pages": [
               "payingame/prices/createprice",
-              "payingame/prices/fiatpayments"
+              "payingame/prices/editprice",
+              "payingame/prices/multipleprices",
+              "payingame/prices/fiatpayments",
+              "payingame/prices/cryptopayments"
             ]
+          },
+          {
+            "group": "Contracts",
+            "pages": ["payingame/contracts/introduction"]
           }
         ]
       },
