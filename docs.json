@@ -96,7 +96,7 @@
         },
         {
           "anchor": "Videos",
-          "href": "https://mintlify.com/blog",
+          "href": "https://www.youtube.com/@Payingame",
           "icon": "youtube"
         }
       ]
@@ -133,7 +133,8 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/PAYINGAME01"
+      "x": "https://x.com/PAYINGAME01",
+      "youtube": "https://www.youtube.com/@Payingame"
     }
   }
 }
