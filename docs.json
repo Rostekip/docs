@@ -57,6 +57,15 @@
             ]
           },
           {
+            "group": "Discount Codes",
+            "pages": [
+              "payingame/discounts/creatediscount",
+              "payingame/discounts/editdiscount",
+              "payingame/discounts/vouchers",
+              "payingame/discounts/paymentwithvoucher"
+            ]
+          },
+          {
             "group": "Contracts",
             "pages": ["payingame/contracts/introduction"]
           }
