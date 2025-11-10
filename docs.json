@@ -92,6 +92,13 @@
           {
             "group": "Payment Page",
             "pages": ["api-reference/paymentpage/payment"]
+          },
+          {
+            "group": "Webhook",
+            "pages": [
+              "api-reference/webhook/security",
+              "api-reference/webhook/signature"
+            ]
           }
         ]
       }

@@ -1,0 +1,26 @@
+---
+title: "Security"
+description: "In order to provide extra security, you can receive an extra header in the webhook. This header lets you verify that the webhook was sent by Payingame, not a malicious third party."
+---
+
+By default this is off, but we recommend to enable this feature. This can be done by going into the webhook and press on 'Generate Key'.
+
+<img
+  src="/images/webhookreturn.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+This can be generated at any time, but more important you can override an existing one. So please be careful using this feature if you already have set up a complete working environment.
+
+Once you confirm in the popup, the following screen will appear
+
+<img
+  src="/images/showsecret.png"
+  alt="addproject"
+  height="100"
+  className="rounded-lg"
+/>
+
+You can then copy this key and save it. You will need it to validate the signature that Payingame will provide.
