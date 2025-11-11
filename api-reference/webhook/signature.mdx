@@ -47,10 +47,13 @@ Example webhook payload:
 }
 ```
 
+translates into string
+`{"PaymentGuid":"9C4E0E58-ABF8-DFC3-D130-EF993228349F","ProjectGuid":"5E3E59A2-FC03-88DE-6135-C05FAE5BA7B2","Quantity":1,"Products":["7BC62A19-E33F-E99D-F582-B720FF46A8CA","7BC62A19-E33F-E99D-F582-B720FF46A8CA"],"UserID":"Cus123"}`
+
 Example signature header:
 
 ```
-Payingame-Signature: t=1762795211,v1=d4ec6316d9dcbbc06db0a18bdf8cdb73c8865d4d5134c9890ba39a15a8f17b26
+Payingame-Signature: t=1762795211,v1=36DCF83BDD5DD52F29A37091A78A0906285BCB7FBFA40DD829D26FEF81956F0B
 
 ```
 
@@ -69,72 +72,81 @@ hmac("1762795211.{raw_body}", secretKey, "HMACSHA256")
 This results in:
 
 ```
-d4ec6316d9dcbbc06db0a18bdf8cdb73c8865d4d5134c9890ba39a15a8f17b26
+36DCF83BDD5DD52F29A37091A78A0906285BCB7FBFA40DD829D26FEF81956F0B
 ```
 
 Receiver side (example .net)
 
 ```tabs
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/[controller]")]
-public class WebhookController : ControllerBase
+public class Program
 {
+    public static void Main()
+    {
+        const string sigHeader = "t=1762795211,v1=36DCF83BDD5DD52F29A37091A78A0906285BCB7FBFA40DD829D26FEF81956F0B";
+
+        // This is the **exact minified JSON** that the signature was generated from.
+        // Any formatting (extra spaces, newlines, tabs) will change the computed HMAC.
+        string body = """
+{"PaymentGuid":"9C4E0E58-ABF8-DFC3-D130-EF993228349F","ProjectGuid":"5E3E59A2-FC03-88DE-6135-C05FAE5BA7B2","Quantity":1,"Products":["7BC62A19-E33F-E99D-F582-B720FF46A8CA","7BC62A19-E33F-E99D-F582-B720FF46A8CA"],"UserID":"Cus123"}
+""";
+
+        ReceiveWebhook(body, sigHeader);
+    }
+
     // Your 256-bit hex secret from the PayInGame dashboard
     private const string SecretKey = "e3cf0f521274f2badab694b0b8c861823aae5b33a59eb4809332dc03bdb9297b";
 
-    [HttpPost]
-    public async Task<IActionResult> ReceiveWebhook()
+    public static void ReceiveWebhook(string body, string sigHeader)
     {
-        // 1️⃣ Read the raw request body exactly as sent
-        string body;
-        using (var reader = new StreamReader(Request.Body))
-            body = await reader.ReadToEndAsync();
+        // Normalize potential CRLF issues (to ensure consistent body hashing)
+        body = body.Replace("\r\n", "\n");
 
-        // 2️⃣ Get the Payingame-Signature header
-        if (!Request.Headers.TryGetValue("Payingame-Signature", out var sigHeader))
-            return Unauthorized("Missing Payingame-Signature header");
-
-        // 3️⃣ Parse the t= and v1= values
-        var parts = sigHeader.ToString()
+        // 1️⃣ Parse the t= and v1= values
+        var parts = sigHeader
             .Split(',', StringSplitOptions.RemoveEmptyEntries)
             .Select(p => p.Trim().Split('='))
+            .Where(p => p.Length == 2)
             .ToDictionary(p => p[0], p => p[1]);
 
         if (!parts.TryGetValue("t", out var timestamp))
-            return Unauthorized("Missing timestamp");
+        {
+            Console.WriteLine("Missing timestamp");
+            return;
+        }
 
         if (!parts.TryGetValue("v1", out var receivedSignature))
-            return Unauthorized("Missing signature");
+        {
+            Console.WriteLine("Missing signature");
+            return;
+        }
 
-        // 4️⃣ Build message to verify: "timestamp.body"
+        // 2️⃣ Build message to verify: "timestamp.body"
         var message = $"{timestamp}.{body}";
+		Console.WriteLine(message);
 
-        // 5️⃣ Compute HMAC-SHA256 using the shared secret
-        var secretBytes = Convert.FromHexString(SecretKey);
+        // 3️⃣ Compute HMAC-SHA256 using the shared secret
+        var secretBytes = Encoding.UTF8.GetBytes(SecretKey);
+
         string computedSignature;
         using (var hmac = new HMACSHA256(secretBytes))
         {
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-            computedSignature = Convert.ToHexString(hash).ToLower();
+            computedSignature = Convert.ToHexString(hash);
         }
 
-        // 6️⃣ Compare safely (constant time)
+        // 4️⃣ Compare safely (constant time)
         if (SecureEquals(computedSignature, receivedSignature))
         {
             Console.WriteLine("✅ Verified webhook!");
-            return Ok();
         }
         else
         {
-            Console.WriteLine("❌ Invalid signature");
-            return Unauthorized();
+            Console.WriteLine($"❌ Invalid signature:\nExpected: {receivedSignature}\nComputed: {computedSignature}");
         }
     }
 
@@ -147,6 +159,7 @@ public class WebhookController : ControllerBase
         return diff == 0;
     }
 }
+
 
 
 ```
