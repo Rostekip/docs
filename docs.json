@@ -68,6 +68,10 @@
           {
             "group": "Contracts",
             "pages": ["payingame/contracts/introduction"]
+          },
+          {
+            "group": "Fees",
+            "pages": ["payingame/fees/feesexplained"]
           }
         ]
       },

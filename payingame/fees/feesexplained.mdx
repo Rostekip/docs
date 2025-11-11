@@ -1,0 +1,10 @@
+---
+title: "Fees Explained"
+description: "As the dashboard will show some fees, this section will explain the meaning of them."
+---
+
+There are 3 types of fees:
+
+- Stripe Fee: This is the fee that Stripe will take on each successful trade. You can see this in the dashboard as Stripe Fee.
+- Payingame Fee: This is the fee that Payingame takes. Its always 1.5%. This will only occur on succesful trades.
+- Tax Calculation Fee: This is a fee that Stripe will take whenever a Tax calculation is made. Every new payment that is created by the user will invoke a possible fee. Although we cache the Tax Calculation, it could be that the caching is too old, or that there is a change. The difference is that this fee will be invoked, even on <b>non successful trades.</b> How Stripe handles this is that you won't see this fee until you have a first succesful sale.
