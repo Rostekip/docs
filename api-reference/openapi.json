@@ -356,6 +356,51 @@
         }
       }
     },
+    "/Token/{YourAPIKEY}/{CustomerID}": {
+      "get": {
+        "summary": "Generate Token that needs to be used to let the user go to the wallets page",
+        "parameters": [
+          {
+            "name": "YourAPIKEY",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "CustomerID",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isError": { "type": "string", "example": "0" },
+                    "Error": { "type": "string", "example": "" },
+                    "Token": {
+                      "type": "string",
+                      "example": "B1479D7E-B42E-09A6-EDF6-CF0FE02AB5BC"
+                    }
+                  },
+                  "example": {
+                    "isError": "0",
+                    "Error": "",
+                    "Token": "B1479D7E-B42E-09A6-EDF6-CF0FE02AB5BC"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/Receipts/{YourAPIKEY}/{CustomerID}": {
       "get": {
         "summary": "Get receipts for a customer",
