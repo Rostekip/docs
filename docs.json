@@ -89,7 +89,7 @@
               "api-reference/endpoint/products",
               "api-reference/endpoint/prices",
               "api-reference/endpoint/languages",
-              // "api-reference/endpoint/token",
+              "api-reference/endpoint/token",
               "api-reference/endpoint/receipts",
               "api-reference/endpoint/webhook"
             ]
